@@ -1,0 +1,78 @@
+body {
+    color: white;
+    text-align: center;
+    background-image: url("https://starwarsblog.starwars.com/wp-content/uploads/2015/09/Screen-Shot-2015-09-15-at-11.25.10-AM-2.png");
+    background-size: cover;
+    font-family: 'Space Mono', monospace;
+
+
+}
+
+.currentHp,
+.badguyHp {
+    font-size: 20px;
+}
+
+.jumbotron {
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 30px;
+}
+
+#gameContainer img {
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.userPlace img {
+    height: 200px;
+}
+
+.enemyPlace img {
+    height: 200px;
+}
+
+#youWin {
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
+
+button {
+    display: none !important;
+}
+
+.buttonAppear {
+    display: block !important;
+}
+
+#endGame {
+    height: 250px;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    bottom: 300px;
+    display: none;
+}
+
+#banner {
+    height: 100%;
+    position: absolute;
+    z-index: 99999;
+    background-image: url("https://www.imgbase.info/images/safe-wallpapers/tv_movies/star_wars/48529_star_wars.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#playDiv {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+#playbutton {
+    text-align: center;
+}
+
+#attackButton {
+    margin: auto;
+}

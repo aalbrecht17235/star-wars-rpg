@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
+
+
+
+    <title>Document</title>
+</head>
+
+<body>
+    <audio id="mysoundclip" preload="auto">
+        <source src="audio/charselectsound.mp3">
+    </audio>
+    <audio id="mysoundclip2" preload="auto">
+        <source src="audio/attacksound.mp3">
+    </audio>
+    <!-- PRESS PLAY MENU -->
+
+    <div class="container-fluid" id="banner">
+        <img src="images/generatedtext.png" />
+        <div class="row">
+            <div class="col-lg-12 jumbotron" id="playDiv">
+                <img id="playbutton" src="images/arcade-font-writer.png" />
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTUAL GAME -->
+    <img src="images/generatedtext.png" />
+    <div class="container" id="gameContainer">
+        <div class="row selections jumbotron">
+            <div class="col-md-3 charSelect"><img src="images/obiwan.jpg" class="img-fluid" value="char1">
+                <p class="emptyp"></p>
+                <p class="characterName">Obi Wan Kenobi</p>
+            </div>
+            <div class="col-md-3 charSelect"><img src="images/darthmaul.png" class="img-fluid" value="char2">
+                <p class="emptyp"></p>
+                <p class="characterName">Darth Maul</p>
+            </div>
+            <div class="col-md-3 charSelect"><img src="images/lukeskywalker.jpg" class="img-fluid" value="char3">
+                <p class="emptyp"></p>
+                <p class="characterName">Luke Skywalker</p>
+            </div>
+            <div class="col-md-3 charSelect"><img src="images/darkhelmet.jpg" class="img-fluid" value="char4">
+                <p class="emptyp"></p>
+                <p class="characterName">Dark Helmet</p>
+            </div>
+            <img id="announcement" src="images/choosefighter.png" />
+        </div>
+
+        <img id="announcement2" src="" />
+
+
+        <div class="row">
+            <div class="col-lg-6 userPlace">
+                <p>Your Character</p>
+            </div>
+            <div class="col-lg-6 enemyPlace">
+                <p>Enemy Character</p>
+            </div>
+        </div>
+
+        <button class="btn-primary button btn" id="attackButton">Attack</button>
+    </div>
+
+    <div id="endGame">
+            <img id="youWin" src=""/>
+            <h1 id="restart">Click to Play Again</h1>
+    </div>
+    <script>
+        $(document).ready(function () {
+
+            // Hiding game content until play button is pressed
+            $('.gameContainer').css("display", "none");
+
+            var selectionMade = true;
+            var button = $(".button");
+            var currentHp = $(".currentHp");
+            var badguyHp = $(".badguyHp")
+            var userHealth = 150;
+            var enemyHealth = 150;
+            var livesLeft = 0;
+
+            $('#playbutton').on("click", function () {
+                $('#banner').css("display", "none");
+                $('.gameContainer').css("display", "block");
+
+            })
+
+
+            // on click event for the character selection
+            $(".charSelect").on("click", function () {
+                // if statement for splitting up chosen character and your enemy
+                if (selectionMade === true) {
+                    var audio = $("#mysoundclip")[0];
+                    audio.play();
+                    // Find the child p of the clicked div and add the currentHp class to it
+                    $(this).find(".emptyp").addClass("currentHp")
+                    // Remove the column formatting from it when clicked so it takes on the new div formatting
+                    $(this).removeClass("col-md-3")
+                    // Adding class name in order to style after click
+                    $(this).addClass("userCharacter")
+                    // Append the clicked div to the user player location
+                    $(this).appendTo($('.userPlace'));
+                    $(this).find('.characterName').appendTo($('.userPlace'));
+                    $(this).unbind();
+                    // Change text of 'choose your fighter' to 'choose your opponent'
+                    $('#announcement').attr("src", "images/select1oppo.png");
+
+                    $('.userPlace').css("background-color", "rgba(0, 255, 0, 0.3)");
+
+                    $(".currentHp").text("Health: " + userHealth);
+                    $(".jumbotron").prepend("Enemies Remaining:");
+
+
+                    // Setting selectionMade to false to push down to the else statement
+                    selectionMade = false;
+                } else {
+                    var audio = $("#mysoundclip")[0];
+                    audio.play();
+                    // Find the child p of the clicked div and add the badguyHp class to it
+                    $(this).find(".emptyp").addClass("badguyHp")
+                    // Remove the column formatting from it when clicked so it takes on the new div formatting
+                    $(this).removeClass("col-md-3")
+                    // Adding class name in order to style after the enemy dies
+                    $(this).addClass("enemyCharacter")
+                    // Append the second clicked div to the enemy location
+                    $(this).appendTo($('.enemyPlace'));
+                    $(this).find('.characterName').appendTo($('.enemyPlace'));
+                    $(this).unbind();
+                    // remove announcement of chhose fighter
+                    $('#announcement').remove();
+                    // add png of 'choose your opponent'
+                    $('#announcement2').attr("src", "");
+                    // sets the enemy place background opaque red
+                    $('.enemyPlace').css("background-color", "rgba(255, 0, 0, 0.3)");
+                    // adds the enemy health info under the enemy picture
+                    $(".badguyHp").text("Health: " + enemyHealth);
+                    // changes jumbotron width since there are less options in it
+                    $(".jumbotron").css("width", "50%");
+                    // centers the jumbotron
+                    $(".jumbotron").css("margin", "auto");
+                    $(".jumbotron").css("padding", "10");
+
+
+                    button.addClass("buttonAppear");
+                };
+
+
+            });
+
+
+
+            $(".button").on("click", function () {
+
+                var audio = $("#mysoundclip2")[0];
+                audio.play();
+
+                // Setting a random number for the damage done by user
+                var userDamage = Math.floor(Math.random() * 25);
+                // Setting a random number for the damage done by computer
+                var enemyDamage = Math.floor(Math.random() * 25);
+                // Subtracting the user damage from the enemy health
+                enemyHealth -= userDamage;
+                // pushing the enemy health number as text to the p with the badguyHp class
+                $(".badguyHp").text(enemyHealth);
+                // Subtracting the enemy damage from the user health
+                userHealth -= enemyDamage;
+                // pushing the user health number as text to the p with currentHp class
+                $(".currentHp").text(userHealth);
+
+                // If enemy dies
+
+                if (enemyHealth <= 0) {
+                    // reset user health
+                    livesLeft++;
+                    userHealth = 150;
+                    // push the reset user health to the p with currentHp class
+                    $(".currentHp").text(userHealth);
+                    // style the enemy who died to disappear
+                    $('.enemyCharacter').css("display", "none");
+                    // reset next enemy health to 150
+                    $('.enemyPlace').css("background", "none");
+                    enemyHealth = 150;
+                    $('#announcement2').attr("src", "images/nextoppo.png");
+                    $('.enemyPlace').find('.characterName').remove();
+
+
+                    button.removeClass("buttonAppear");
+                    // push the newly reset enemy heal to the p with class badguyHp
+                    console.log(livesLeft);
+
+                    $(".badguyHp").text(enemyHealth);
+
+                    if (livesLeft === 3) {
+                        $('.container').remove();
+                        $('#endGame').css("display", "block");
+                        $('#youWin').attr("src","images/youwin.png");
+                    }
+                    // if user loses
+                } else if (userHealth <= 0) {
+                    $('.container').remove();
+                        $('#endGame').css("display", "block");
+                        $('#youWin').attr("src","images/youlose.png");
+                        $('#restart').text("Click to Try Again");
+                    if (livesLeft === 3) {
+                        alert("You win!")
+                        location.reload();
+                    }
+                }
+
+            });
+
+            $('#restart').on("click", function(){
+                location.reload();
+
+            });
+
+        });
+    </script>
+</body>
+
+</html>
