@@ -89,6 +89,8 @@
             var userHealth = 150;
             var enemyHealth = 150;
             var livesLeft = 0;
+            var enemiesLeft = 0;
+            
 
             $('#playbutton').on("click", function () {
                 $('#banner').css("display", "none");
@@ -99,6 +101,7 @@
 
             // on click event for the character selection
             $(".charSelect").on("click", function () {
+                
                 // if statement for splitting up chosen character and your enemy
                 if (selectionMade === true) {
                     var audio = $("#mysoundclip")[0];
@@ -113,6 +116,7 @@
                     $(this).appendTo($('.userPlace'));
                     $(this).find('.characterName').appendTo($('.userPlace'));
                     $(this).unbind();
+                    
                     // Change text of 'choose your fighter' to 'choose your opponent'
                     $('#announcement').attr("src", "images/select1oppo.png");
 
@@ -137,6 +141,11 @@
                     $(this).appendTo($('.enemyPlace'));
                     $(this).find('.characterName').appendTo($('.enemyPlace'));
                     $(this).unbind();
+                    enemiesLeft++
+                    if(enemiesLeft === 3){
+                        $('.selections').remove();
+                    }
+                    console.log(enemiesLeft + " enemies left.")
                     // remove announcement of chhose fighter
                     $('#announcement').remove();
                     // add png of 'choose your opponent'
@@ -205,7 +214,7 @@
                         $('.container').remove();
                         $('#endGame').css("display", "block");
                         $('#youWin').attr("src","images/youwin.png");
-                    }
+                    } 
                     // if user loses
                 } else if (userHealth <= 0) {
                     $('.container').remove();
