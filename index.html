@@ -168,7 +168,7 @@
                 // Setting a random number for the damage done by user
                 var userDamage = Math.floor(Math.random() * 25);
                 // Setting a random number for the damage done by computer
-                var enemyDamage = Math.floor(Math.random() * 25);
+                var enemyDamage = Math.floor(Math.random() * 15);
                 // Subtracting the user damage from the enemy health
                 enemyHealth -= userDamage;
                 // pushing the enemy health number as text to the p with the badguyHp class
@@ -183,7 +183,7 @@
                 if (enemyHealth <= 0) {
                     // reset user health
                     livesLeft++;
-                    userHealth = 150;
+                    userHealth = 100;
                     // push the reset user health to the p with currentHp class
                     $(".currentHp").text(userHealth);
                     // style the enemy who died to disappear
