@@ -25,4 +25,4 @@ Here's how the app works:
 
 # Gameplay Example
 
-[Alt Text](http://g.recordit.co/Z9iEGcsWXI.gif)
+![Alt Text](http://g.recordit.co/Z9iEGcsWXI.gif)
